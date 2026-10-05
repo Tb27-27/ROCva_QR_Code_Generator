@@ -10,8 +10,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
+    <div class="app-wrapper" id="app-wrapper">
+        <div class="container">
+            <button id="toggle-colors-btn" class="toggle-btn" title="Customize Colors">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+                </svg>
+            </button>
+            <header>
             <h1>ROCva QR Generator</h1>
             <p>Enter your URL or text below to generate a custom QR code.</p>
         </header>
@@ -35,7 +41,25 @@
             
             <button id="download-btn" class="btn">Download</button>
         </main>
-    </div>
+        </div> <!-- end container -->
+
+        <!-- Slide-out Color Panel -->
+        <div class="color-panel" id="color-panel">
+            <h3>Colors</h3>
+            <div class="color-option">
+                <label for="color-dots">Dots</label>
+                <input type="color" id="color-dots" value="#333333">
+            </div>
+            <div class="color-option">
+                <label for="color-boxes">Boxes</label>
+                <input type="color" id="color-boxes" value="#FF0028">
+            </div>
+            <div class="color-option">
+                <label for="color-bg">Background</label>
+                <input type="color" id="color-bg" value="#FFFFFF">
+            </div>
+        </div>
+    </div> <!-- end app-wrapper -->
 
     <!-- qrcode library for generating the base QR Code -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>

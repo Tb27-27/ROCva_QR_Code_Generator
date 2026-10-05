@@ -3,6 +3,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const qrPreview = document.getElementById('qr-preview');
     const downloadBtn = document.getElementById('download-btn');
     
+    const appWrapper = document.getElementById('app-wrapper');
+    const toggleColorsBtn = document.getElementById('toggle-colors-btn');
+    const colorDots = document.getElementById('color-dots');
+    const colorBoxes = document.getElementById('color-boxes');
+    const colorBg = document.getElementById('color-bg');
+    
     // Create an image object for the logo to convert it to base64
     const logo = new Image();
     logo.src = 'Logo.png'; 
@@ -27,6 +33,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     qrInput.addEventListener('input', generateQRCode);
     
+    // Toggle menu
+    toggleColorsBtn.addEventListener('click', () => {
+        appWrapper.classList.toggle('show-colors');
+    });
+
+    // Re-generate QR when colors change
+    colorDots.addEventListener('input', generateQRCode);
+    colorBoxes.addEventListener('input', generateQRCode);
+    colorBg.addEventListener('input', generateQRCode);
+    
     if (qrInput.value.trim() !== '') {
         generateQRCode();
     }
@@ -48,6 +64,11 @@ document.addEventListener('DOMContentLoaded', () => {
             text = 'https://' + text;
         }
 
+        // Get custom colors
+        const dotColor = colorDots.value;
+        const boxColor = colorBoxes.value;
+        const bgColor = colorBg.value;
+
         try {
             // Get the raw QR code matrix data
             const qrData = QRCode.create(text, { errorCorrectionLevel: 'H' });
@@ -58,8 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // Start building the SVG string
             let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${totalModules} ${totalModules}" shape-rendering="crispEdges">`;
             
-            // White background
-            svg += `<rect width="100%" height="100%" fill="#FFFFFF"/>`;
+            // Background
+            svg += `<rect width="100%" height="100%" fill="${bgColor}"/>`;
 
             // Draw modules
             for (let row = 0; row < moduleCount; row++) {
@@ -71,9 +92,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         const isTopRight = (row < 7 && col >= moduleCount - 7);
                         const isBottomLeft = (row >= moduleCount - 7 && col < 7);
                         
-                        let color = '#333333'; // Default data dot color (Dark Gray)
+                        let color = dotColor; // Default data dot color
                         if (isTopLeft || isTopRight || isBottomLeft) {
-                            color = '#FF0028'; // Finder pattern color (Red)
+                            color = boxColor; // Finder pattern color
                         }
 
                         // Add the rectangle for the dot
@@ -99,9 +120,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const x = totalModules - logoSize - padding;
                 const y = totalModules - logoSize - padding;
 
-                // Draw a white background rectangle behind the logo
+                // Draw a background rectangle behind the logo (using the user's custom bg color)
                 const bgPadding = (4 / 300) * totalModules;
-                svg += `<rect x="${x - bgPadding}" y="${y - bgPadding}" width="${logoSize + (bgPadding * 2)}" height="${logoSize + (bgPadding * 2)}" fill="#FFFFFF"/>`;
+                svg += `<rect x="${x - bgPadding}" y="${y - bgPadding}" width="${logoSize + (bgPadding * 2)}" height="${logoSize + (bgPadding * 2)}" fill="${bgColor}"/>`;
 
                 // Embed the Base64 logo image directly into the SVG
                 svg += `<image x="${x}" y="${y}" width="${logoSize}" height="${logoSize}" href="${base64Logo}"/>`;
