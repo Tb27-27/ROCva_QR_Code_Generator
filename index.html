@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROCva QR Code Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ROCva QR Generator</h1>
+            <p>Enter your URL or text below to generate a custom QR code.</p>
+        </header>
+        
+        <main>
+            <div class="input-group">
+                <input type="text" id="qr-input" placeholder="Enter URL or text here..." value="https://www.rocva.nl/">
+            </div>
+            
+            <div class="qr-preview-container">
+                <div id="qr-preview"></div>
+            </div>
+            
+            <button id="download-btn" class="btn">Download QR Code</button>
+        </main>
+    </div>
+
+    <!-- qrcode library for generating the base QR Code -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
