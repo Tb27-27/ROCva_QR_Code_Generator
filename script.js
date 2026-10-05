@@ -118,23 +118,55 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Handle SVG download
+    const formatSelect = document.getElementById('download-format');
+
+    // Handle SVG or PNG download
     downloadBtn.addEventListener('click', () => {
         if (!currentSvgString) {
             alert("Please enter text or a URL first to generate a QR Code.");
             return;
         }
         
-        // Create a Blob from the SVG string
-        const blob = new Blob([currentSvgString], { type: 'image/svg+xml;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
+        const format = formatSelect.value;
         
-        const link = document.createElement('a');
-        link.download = 'rocva-qrcode.svg';
-        link.href = url;
-        link.click();
-        
-        // Cleanup the object URL
-        URL.revokeObjectURL(url);
+        if (format === 'svg') {
+            // Download as SVG
+            const blob = new Blob([currentSvgString], { type: 'image/svg+xml;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            
+            const link = document.createElement('a');
+            link.download = 'rocva-qrcode.svg';
+            link.href = url;
+            link.click();
+            
+            URL.revokeObjectURL(url);
+        } else {
+            // Download as PNG (Rasterize SVG to high-res canvas)
+            const canvas = document.createElement('canvas');
+            // 1024x1024 guarantees a crisp, high-quality PNG
+            canvas.width = 1024;
+            canvas.height = 1024;
+            const ctx = canvas.getContext('2d');
+            
+            const img = new Image();
+            const svgBlob = new Blob([currentSvgString], { type: 'image/svg+xml;charset=utf-8' });
+            const url = URL.createObjectURL(svgBlob);
+            
+            img.onload = () => {
+                // Ensure a solid white background in the PNG just in case
+                ctx.fillStyle = '#FFFFFF';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                // Draw the perfectly scaled SVG vector image onto the canvas
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                URL.revokeObjectURL(url);
+                
+                const link = document.createElement('a');
+                link.download = 'rocva-qrcode.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            };
+            
+            img.src = url;
+        }
     });
 });

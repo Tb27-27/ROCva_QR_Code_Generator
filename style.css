@@ -1,41 +1,54 @@
 :root {
     --primary-red: #FF0028;
+    --primary-red-hover: #d60022;
+    --primary-red-glow: rgba(255, 0, 40, 0.2);
     --white: #FFFFFF;
     --dark-gray: #333333;
-    --light-gray: #f5f5f5;
+    --text-light: #6b7280;
+    --border-color: #e5e7eb;
+    --bg-light: #f9fafb;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--dark-gray);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    /* Soft premium dark gradient */
+    background: linear-gradient(135deg, #434343 0%, #1c1c1c 100%);
     color: var(--dark-gray);
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .container {
     background-color: var(--white);
-    padding: 2.5rem;
-    border-radius: 12px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    padding: 2.5rem 2.5rem 3rem;
+    border-radius: 16px;
+    /* Deep soft shadow */
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
     text-align: center;
-    max-width: 400px;
-    width: 90%;
+    max-width: 420px;
+    width: 100%;
+    /* Red accent bar on top */
+    border-top: 6px solid var(--primary-red);
 }
 
 header h1 {
     color: var(--primary-red);
     margin-top: 0;
     font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
 }
 
 header p {
-    color: #666;
+    color: var(--text-light);
     font-size: 0.95rem;
     margin-bottom: 2rem;
+    line-height: 1.5;
 }
 
 .input-group {
@@ -44,18 +57,26 @@ header p {
 
 #qr-input {
     width: 100%;
-    padding: 14px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
+    padding: 14px 16px;
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
     font-size: 1rem;
+    font-family: inherit;
     box-sizing: border-box;
-    transition: border-color 0.3s;
+    transition: all 0.3s ease;
     color: var(--dark-gray);
+    background-color: var(--bg-light);
 }
 
 #qr-input:focus {
     outline: none;
     border-color: var(--primary-red);
+    background-color: var(--white);
+    box-shadow: 0 0 0 4px var(--primary-red-glow);
+}
+
+#qr-input::placeholder {
+    color: #9ca3af;
 }
 
 .qr-preview-container {
@@ -63,18 +84,23 @@ header p {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 250px;
+    min-height: 280px;
 }
 
 #qr-preview {
     max-width: 100%;
-    width: 300px;
+    width: 280px;
     height: auto;
-    border: 1px solid #eee;
-    border-radius: 8px;
-    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
     background: var(--white);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    transition: transform 0.3s ease;
+}
+
+#qr-preview:hover {
+    transform: translateY(-2px);
 }
 
 #qr-preview svg {
@@ -83,24 +109,60 @@ header p {
     display: block;
 }
 
+.format-group {
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.format-group label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+#download-format {
+    padding: 10px 14px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    font-weight: 500;
+    background-color: var(--bg-light);
+    color: var(--dark-gray);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+#download-format:focus, #download-format:hover {
+    border-color: var(--primary-red);
+}
+
 .btn {
     background-color: var(--primary-red);
     color: var(--white);
     border: none;
-    padding: 14px 24px;
-    border-radius: 8px;
-    font-size: 1.05rem;
-    font-weight: bold;
+    padding: 16px 24px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-family: inherit;
     cursor: pointer;
     width: 100%;
-    transition: background-color 0.3s, transform 0.1s;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px var(--primary-red-glow);
 }
 
 .btn:hover {
-    background-color: #d60022;
+    background-color: var(--primary-red-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255, 0, 40, 0.3);
 }
 
 .btn:active {
-    background-color: #b3001c;
-    transform: scale(0.98);
+    transform: translateY(0);
+    box-shadow: 0 2px 8px var(--primary-red-glow);
 }
