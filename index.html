@@ -12,13 +12,13 @@
 <body>
     <div class="app-wrapper" id="app-wrapper">
         <div class="container">
-            <button id="toggle-colors-btn" class="toggle-btn" title="Customize Colors">
+            <button id="toggle-colors-btn" class="toggle-btn" title="Customize Colors" aria-label="Customize colors" aria-expanded="false">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
                 </svg>
             </button>
 
-            <button id="toggle-icon-btn" class="toggle-btn" title="Customize Icon">
+            <button id="toggle-icon-btn" class="toggle-btn" title="Customize Icon" aria-label="Customize icon" aria-expanded="false">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
                 </svg>
@@ -68,11 +68,18 @@
 
         <div class="panel" id="icon-panel">
             <h3>Icons</h3>
-            <div class="icon-options">
-                <label for="icon">Icons</label>
-                <input type="image" id="icon-choice" src="Logo.png" width="48px" height="48px">
+            <div class="icon-options" role="radiogroup" aria-label="Choose a logo">
+                <label class="icon-choice">
+                    <input type="radio" name="qr-icon" value="Logo_ROCvA.svg" checked>
+                    <img src="Logo_ROCvA.svg" alt="">
+                    <span>ROCvA</span>
+                </label>
+                <label class="icon-choice">
+                    <input type="radio" name="qr-icon" value="logo_ROCvF.svg">
+                    <img src="logo_ROCvF.svg" alt="">
+                    <span>ROCvF</span>
+                </label>
             </div>
-            <div></div>
         </div>
     </div> <!-- end app-wrapper -->
 

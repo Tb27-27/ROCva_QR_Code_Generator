@@ -4,38 +4,72 @@ document.addEventListener('DOMContentLoaded', () => {
     const downloadBtn = document.getElementById('download-btn');
     
     const appWrapper = document.getElementById('app-wrapper');
-    const toggleBtn = document.getElementById('toggle-btn');
+    const toggleColorBtn = document.getElementById('toggle-colors-btn');
+    const toggleIconBtn = document.getElementById('toggle-icon-btn');
+    const iconChoices = document.querySelectorAll('input[name="qr-icon"]');
     const colorDots = document.getElementById('color-dots');
     const colorBoxes = document.getElementById('color-boxes');
     const colorBg = document.getElementById('color-bg');
+    let currentSvgString = "";
     
-    // Create an image object for the logo to convert it to base64
-    const logo = new Image();
-    logo.src = 'Logo.png'; 
     let base64Logo = "";
-    
-    logo.onload = () => {
-        // Convert the loaded logo to base64 for embedding directly inside the standalone SVG
+
+    function loadLogo(source) {
+        const logo = new Image();
+        logo.onload = () => {
         const canvas = document.createElement('canvas');
         canvas.width = logo.width;
         canvas.height = logo.height;
         const ctx = canvas.getContext('2d');
         ctx.drawImage(logo, 0, 0);
         base64Logo = canvas.toDataURL('image/png');
-        
         generateQRCode();
-    };
+        };
 
-    logo.onerror = () => {
-        console.error("Failed to load Logo.png");
-        generateQRCode(); // Generate without logo if it fails
-    };
+        logo.onerror = () => {
+            console.error(`Failed to load ${source}`);
+            base64Logo = "";
+            generateQRCode();
+        };
+
+        logo.src = source;
+    }
+
+    loadLogo(document.querySelector('input[name="qr-icon"]:checked').value);
 
     qrInput.addEventListener('input', generateQRCode);
     
-    // Toggle menu
-    toggleBtn.addEventListener('click', () => {
-        appWrapper.classList.toggle('show-panel');
+    // Toggle panels
+    toggleColorBtn.addEventListener('click', () => {
+        const isOpen = appWrapper.classList.toggle('show-colors');
+        appWrapper.classList.remove('show-icons');
+        toggleColorBtn.setAttribute('aria-expanded', String(isOpen));
+        toggleIconBtn.setAttribute('aria-expanded', 'false');
+    });
+    
+    toggleIconBtn.addEventListener('click', () => {
+        const isOpen = appWrapper.classList.toggle('show-icons');
+        appWrapper.classList.remove('show-colors');
+        toggleIconBtn.setAttribute('aria-expanded', String(isOpen));
+        toggleColorBtn.setAttribute('aria-expanded', 'false');
+    });
+
+    iconChoices.forEach((choice) => {
+        choice.addEventListener('change', () => {
+            if (!choice.checked) return;
+
+            if (choice.value === 'Logo_ROCvA.svg') {
+                colorDots.value = '#333333';
+                colorBoxes.value = '#ff0028';
+                colorBg.value = '#ffffff';
+            } else {
+                colorDots.value = '#000000';
+                colorBoxes.value = '#f47933';
+                colorBg.value = '#ffffff';
+            }
+
+            loadLogo(choice.value);
+        });
     });
 
     // Re-generate QR when colors change
@@ -46,9 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (qrInput.value.trim() !== '') {
         generateQRCode();
     }
-
-    // Stores the current SVG string for downloading
-    let currentSvgString = "";
 
     function generateQRCode() {
         let text = qrInput.value.trim();
