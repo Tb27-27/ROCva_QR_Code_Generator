@@ -17,6 +17,12 @@
                     <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
                 </svg>
             </button>
+
+            <button id="toggle-icon-btn" class="toggle-btn" title="Customize Icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+                </svg>
+            </button>
             <header>
             <h1>ROCva QR Generator</h1>
             <p>Enter your URL or text below to generate a custom QR code.</p>
@@ -44,7 +50,7 @@
         </div> <!-- end container -->
 
         <!-- Slide-out Color Panel -->
-        <div class="color-panel" id="color-panel">
+        <div class="panel" id="color-panel">
             <h3>Colors</h3>
             <div class="color-option">
                 <label for="color-dots">Dots</label>
@@ -58,6 +64,15 @@
                 <label for="color-bg">Background</label>
                 <input type="color" id="color-bg" value="#FFFFFF">
             </div>
+        </div>
+
+        <div class="panel" id="icon-panel">
+            <h3>Icons</h3>
+            <div class="icon-options">
+                <label for="icon">Icons</label>
+                <input type="image" id="icon-choice" src="Logo.png" width="48px" height="48px">
+            </div>
+            <div></div>
         </div>
     </div> <!-- end app-wrapper -->
 

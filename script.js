@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const downloadBtn = document.getElementById('download-btn');
     
     const appWrapper = document.getElementById('app-wrapper');
-    const toggleColorsBtn = document.getElementById('toggle-colors-btn');
+    const toggleBtn = document.getElementById('toggle-btn');
     const colorDots = document.getElementById('color-dots');
     const colorBoxes = document.getElementById('color-boxes');
     const colorBg = document.getElementById('color-bg');
@@ -34,8 +34,8 @@ document.addEventListener('DOMContentLoaded', () => {
     qrInput.addEventListener('input', generateQRCode);
     
     // Toggle menu
-    toggleColorsBtn.addEventListener('click', () => {
-        appWrapper.classList.toggle('show-colors');
+    toggleBtn.addEventListener('click', () => {
+        appWrapper.classList.toggle('show-panel');
     });
 
     // Re-generate QR when colors change
